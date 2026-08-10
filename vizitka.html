@@ -1,0 +1,2097 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="robots" content="noindex, follow" />
+    <title>КитайЗапчасть — автосервис для китайских авто в Уфе</title>
+    <meta
+      name="description"
+      content="Автосервис и запчасти для китайских автомобилей в Уфе: диагностика, ремонт, подбор и установка запчастей. Самаркандская, 4/1."
+    />
+    <meta name="theme-color" content="#14151A" />
+    <link rel="icon" type="image/png" href="logo.png" />
+
+    <!-- TODO: при переносе в Joomla подключить шрифты локально или оставить Google Fonts CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --rouge: #c8102e;
+        --rouge-dark: #9c0b22;
+        --onyx: #14151a;
+        --graphite: #3a3d46;
+        --paper: #ffffff;
+        --steel: #f2f3f5;
+        --line: #e3e5e9;
+        --muted: #6b6f79;
+
+        --font-display: "Oswald", sans-serif;
+        --font-body: "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+
+        --radius: 14px;
+        --gap: 16px;
+        --container: 560px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--onyx);
+        font-family: var(--font-body);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        padding-bottom: 76px; /* место под sticky-панель */
+      }
+      img,
+      svg {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        margin: 0;
+        letter-spacing: 0.2px;
+      }
+      p {
+        margin: 0;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--rouge);
+        outline-offset: 2px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        background: var(--rouge);
+        color: #fff;
+        padding: 10px 16px;
+        z-index: 999;
+        border-radius: 0 0 8px 0;
+      }
+      .skip-link:focus {
+        left: 0;
+      }
+
+      .wrap {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* ===== Signature element: "диагностическая карта" — шапка как отрывной талон сервисного заказа ===== */
+      .ticket-header {
+        background: var(--onyx);
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .ticket-header__inner {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+      .brand__logo {
+        width: 36px;
+        height: 36px;
+        flex: none;
+        border-radius: 50%;
+      }
+      .brand__text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .brand__name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: 0.3px;
+        line-height: 1.1;
+      }
+      .brand__name span {
+        color: var(--rouge);
+      }
+      .brand__tag {
+        font-size: 10px;
+        color: #b7bac3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .brand__phone {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 13px;
+        background: var(--rouge);
+        padding: 8px 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        flex: none;
+      }
+      .ticket-header__perf {
+        height: 8px;
+        background-image: radial-gradient(
+          circle,
+          var(--paper) 3px,
+          transparent 3.5px
+        );
+        background-size: 16px 16px;
+        background-position: center;
+        background-color: var(--onyx);
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        background: linear-gradient(180deg, var(--onyx) 0%, #1e2028 100%);
+        color: #fff;
+        padding: 28px 0 24px;
+      }
+      .hero__eyebrow {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--rouge);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .hero__eyebrow::before {
+        content: "";
+        width: 18px;
+        height: 2px;
+        background: var(--rouge);
+        display: inline-block;
+      }
+      .hero h1 {
+        font-size: 26px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: var(--rouge);
+      }
+      .hero__sub {
+        margin-top: 12px;
+        font-size: 15px;
+        color: #c9cbd3;
+        max-width: 46ch;
+      }
+      .hero__actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        border: 1px solid transparent;
+        min-height: 50px;
+        line-height: 1.1;
+      }
+      .btn svg {
+        width: 20px;
+        height: 20px;
+        flex: none;
+      }
+      .btn--primary {
+        background: var(--rouge);
+        color: #fff;
+      }
+      .btn--primary:hover {
+        background: var(--rouge-dark);
+      }
+      .btn--ghost {
+        background: transparent;
+        color: #fff;
+        border-color: #4a4d57;
+        transition:
+          background-color 0.4s ease,
+          border-color 0.4s ease,
+          color 0.4s ease;
+      }
+      .btn--ghost:hover,
+      .btn--ghost:focus-visible {
+        background: var(--rouge);
+        border-color: var(--rouge);
+        color: #fff;
+      }
+      .btn--block {
+        width: 100%;
+      }
+
+      .hero__strip {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: #9ba0ac;
+        border-top: 1px solid #2a2c34;
+        padding-top: 12px;
+      }
+
+      /* ===== QUICK-ANSWERS (5 вопросов за 1-2 минуты, п.2 ТЗ) ===== */
+      .quick {
+        background: var(--paper);
+        padding: 22px 0 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .quick__title {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--muted);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .quick__title::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--rouge);
+        flex: none;
+      }
+      .quick-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .quick-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        background: var(--steel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        text-align: left;
+        width: 100%;
+      }
+      .quick-item__num {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 13px;
+        color: #fff;
+        background: var(--onyx);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        margin-top: 1px;
+      }
+      .quick-item__q {
+        font-weight: 700;
+        font-size: 13.5px;
+        color: var(--onyx);
+        margin-bottom: 3px;
+      }
+      .quick-item__a {
+        font-size: 12.5px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .quick-item__arrow {
+        margin-left: auto;
+        color: var(--rouge);
+        flex: none;
+        align-self: center;
+      }
+      .quick-item__arrow svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      @media (min-width: 600px) {
+        .quick-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* ===== SECTION generic ===== */
+      section {
+        padding: 32px 0;
+      }
+      .section--alt {
+        background: var(--steel);
+      }
+      .section__eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--rouge);
+        margin-bottom: 6px;
+        display: block;
+      }
+      .section h2 {
+        font-size: 21px;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+      .section__lead {
+        color: var(--muted);
+        font-size: 14.5px;
+        margin-bottom: 18px;
+        max-width: 52ch;
+      }
+
+      /* ===== TRUST GRID ===== */
+      .trust-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .trust-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+      }
+      .trust-card svg {
+        width: 24px;
+        height: 24px;
+        color: var(--rouge);
+        margin-bottom: 8px;
+      }
+      .trust-card__title {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+      .trust-card__desc {
+        font-size: 12.5px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      /* ===== BRAND PLATES (signature detail) ===== */
+      .plates {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .plate {
+        display: flex;
+        align-items: stretch;
+        background: #fff;
+        border: 1.5px solid var(--onyx);
+        border-radius: 5px;
+        overflow: hidden;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        box-shadow: 2px 2px 0 rgba(20, 21, 26, 0.08);
+      }
+      .plate__stripe {
+        width: 6px;
+        background: var(--rouge);
+        flex: none;
+      }
+      .plate span {
+        padding: 7px 10px;
+      }
+      .plate--more {
+        color: var(--muted);
+        border-style: dashed;
+        box-shadow: none;
+      }
+      .plate--more .plate__stripe {
+        background: var(--muted);
+      }
+
+      /* ===== BENEFITS ===== */
+      .benefits-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .benefit-card {
+        display: flex;
+        gap: 14px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px;
+      }
+      .benefit-card__num {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 12px;
+        color: #fff;
+        background: var(--onyx);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .benefit-card__title {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+      .benefit-card__desc {
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+
+      /* ===== GALLERY ===== */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .gallery-item {
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        background: repeating-linear-gradient(
+          135deg,
+          #e3e5e9 0 10px,
+          #ecedf0 10px 20px
+        );
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: flex-end;
+        padding: 8px;
+      }
+      .gallery-item span {
+        font-size: 11px;
+        background: rgba(20, 21, 26, 0.75);
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 6px;
+      }
+      .gallery__note {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      /* ===== REVIEWS ===== */
+      .rating-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--onyx);
+        color: #fff;
+        border-radius: 10px;
+        padding: 8px 12px;
+        margin-bottom: 16px;
+        font-size: 13px;
+      }
+      .rating-badge__stars {
+        color: var(--rouge);
+        letter-spacing: 1px;
+        font-size: 13px;
+      }
+      .rating-badge__text strong {
+        color: #fff;
+      }
+
+      /* ---- Карусель отзывов ---- */
+      .review-carousel {
+        position: relative;
+        margin: 0 -20px 14px;
+      }
+      .review-track {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 2px 20px 14px;
+        scrollbar-width: none;
+      }
+      .review-track::-webkit-scrollbar {
+        display: none;
+      }
+      .review-card {
+        flex: 0 0 84%;
+        scroll-snap-align: start;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--rouge);
+        border-radius: 10px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .review-card__stars {
+        color: var(--rouge);
+        font-size: 13px;
+        margin-bottom: 8px;
+        letter-spacing: 2px;
+      }
+      .review-card__text {
+        font-size: 13.5px;
+        color: var(--graphite);
+        margin-bottom: 10px;
+        line-height: 1.45;
+      }
+      .review-card__author {
+        font-size: 12px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+      }
+      .review-carousel__nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 2px;
+      }
+      .review-carousel__btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--onyx);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        flex: none;
+      }
+      .review-carousel__btn:hover {
+        background: var(--rouge);
+      }
+      .review-carousel__btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .review-carousel__count {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--muted);
+        align-self: center;
+      }
+      .review__cta {
+        margin-top: 14px;
+      }
+      .review__note {
+        font-size: 11.5px;
+        color: var(--muted);
+        font-style: italic;
+        margin-top: 10px;
+      }
+
+      @media (min-width: 600px) {
+        .review-carousel {
+          margin: 0 0 14px;
+        }
+        .review-track {
+          padding: 2px 2px 14px;
+        }
+        .review-card {
+          flex-basis: 340px;
+        }
+      }
+
+      /* ===== CONTACTS ===== */
+      .action-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .action {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        background: var(--paper);
+        border: 1.5px solid var(--onyx);
+        border-radius: var(--radius);
+        padding: 14px;
+        min-height: 88px;
+        justify-content: space-between;
+        transition:
+          background-color 0.4s ease,
+          border-color 0.4s ease,
+          color 0.4s ease;
+      }
+      .action strong {
+        font-size: 13.5px;
+        font-weight: 700;
+      }
+      .action svg {
+        width: 22px;
+        height: 22px;
+        color: var(--rouge);
+        transition: color 0.4s ease;
+      }
+      .action--call {
+        background: var(--rouge);
+        border-color: var(--rouge);
+        color: #fff;
+      }
+      .action--call svg {
+        color: #fff;
+      }
+      .action:not(.action--call):hover,
+      .action:not(.action--call):focus-visible {
+        background: var(--rouge);
+        border-color: var(--rouge);
+        color: #fff;
+      }
+      .action:not(.action--call):hover svg,
+      .action:not(.action--call):focus-visible svg {
+        color: #fff;
+      }
+
+      .form-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+        margin-bottom: 22px;
+      }
+      .form-card h3 {
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      .form-card__desc {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .field {
+        margin-bottom: 12px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        font-family: var(--font-body);
+        font-size: 14px;
+        background: var(--steel);
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+      .form-status {
+        display: none;
+        align-items: flex-start;
+        gap: 9px;
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .form-status svg {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        margin-top: 1px;
+      }
+      .form-status__time {
+        display: block;
+        font-size: 11.5px;
+        opacity: 0.8;
+        margin-top: 2px;
+        font-family: var(--font-mono);
+      }
+      .form-status.ok {
+        display: flex;
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .form-status.err {
+        display: flex;
+        background: #fee2e2;
+        color: var(--rouge-dark);
+      }
+      .form-status.pending {
+        display: flex;
+        background: var(--steel);
+        color: var(--muted);
+      }
+      .btn[disabled] {
+        opacity: 0.6;
+        cursor: default;
+      }
+
+      .info-card {
+        background: var(--onyx);
+        color: #fff;
+        border-radius: var(--radius);
+        padding: 18px;
+        font-size: 13.5px;
+      }
+      .info-card__row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #2a2c34;
+      }
+      .info-card__row:last-child {
+        border-bottom: none;
+      }
+      .info-card__label {
+        color: #9ba0ac;
+      }
+      .info-card__value {
+        text-align: right;
+        font-family: var(--font-mono);
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: var(--steel);
+        padding: 22px 0 28px;
+        font-size: 11.5px;
+        color: var(--muted);
+        text-align: center;
+      }
+      footer a {
+        color: var(--graphite);
+        text-decoration: underline;
+      }
+      footer .foot-brand {
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--onyx);
+        margin-bottom: 6px;
+      }
+
+      /* ===== STICKY BOTTOM CTA (мобильная панель) ===== */
+      .sticky-cta {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--onyx);
+        display: flex;
+        padding: 8px calc(8px + env(safe-area-inset-left))
+          calc(8px + env(safe-area-inset-bottom))
+          calc(8px + env(safe-area-inset-right));
+        gap: 6px;
+        z-index: 60;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+      }
+      .sticky-cta a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: #fff;
+        font-size: 10.5px;
+        padding: 8px 2px;
+        border-radius: 8px;
+        transition: background-color 0.4s ease;
+      }
+      .sticky-cta a svg {
+        width: 20px;
+        height: 20px;
+      }
+      .sticky-cta a.call {
+        background: var(--rouge);
+      }
+      .sticky-cta a:not(.call):hover,
+      .sticky-cta a:not(.call):focus-visible {
+        background: var(--rouge);
+      }
+
+      /* ===== DESKTOP / TABLET ===== */
+      @media (min-width: 600px) {
+        :root {
+          --container: 900px;
+        }
+        .hero h1 {
+          font-size: 34px;
+        }
+        .trust-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .benefits-list {
+          flex-direction: row;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .action-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .sticky-cta {
+          display: none;
+        } /* на десктопе не нужна нижняя панель */
+        body {
+          padding-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#contacts">Перейти к контактам</a>
+
+    <!-- ===== ШАПКА (компактная, отдельная от основной шапки сайта) ===== -->
+    <header class="ticket-header" id="top">
+      <div class="ticket-header__inner">
+        <div class="brand">
+          <img
+            class="brand__logo"
+            src="image.png"
+            alt="Логотип КитайЗапчасть — дракон в красном круге"
+          />
+          <div class="brand__text">
+            <span class="brand__name">Китай<span>Запчасть</span></span>
+            <span class="brand__tag"
+              >Автосервис и запчасти для китайских авто</span
+            >
+          </div>
+        </div>
+        <a class="brand__phone" href="tel:+73472000794">+7 (347) 200 07-94</a>
+      </div>
+      <div class="ticket-header__perf" aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <!-- ===== HERO ===== -->
+      <section class="hero">
+        <div class="wrap">
+          <span class="hero__eyebrow">Уфа · Самаркандская, 4/1</span>
+          <h1>
+            Chery, Geely, Haval, Changan — <em>это наша специализация</em>, а не
+            общий сервис "для всех машин"
+          </h1>
+          <p class="hero__sub">
+            Диагностика, ремонт, подбор оригинальных и аналоговых запчастей и
+            установка — всё в одном сервисном центре в Уфе.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="tel:+73472000794">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.4c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"
+                />
+              </svg>
+              Позвонить
+            </a>
+            <a
+              class="btn btn--ghost"
+              id="hero-route"
+              href="#"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Маршрут
+            </a>
+          </div>
+
+          <div class="hero__strip">
+            <span>CHERY</span
+            >·<span>GEELY</span>·<span>HAVAL</span>·<span>CHANGAN</span>·<span>OMODA</span>·<span>EXEED</span>·<span
+              >ещё 5+</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 5 ОТВЕТОВ ЗА МИНУТУ (п.2 ТЗ: страница отвечает на 5 вопросов за 1-2 минуты) ===== -->
+      <section class="quick" aria-label="Главное за минуту">
+        <div class="wrap">
+          <span class="quick__title">Главное за 1 минуту</span>
+          <div class="quick-list">
+            <a class="quick-item" href="#trust">
+              <span class="quick-item__num">1</span>
+              <span>
+                <span class="quick-item__q"
+                  >Почему стоит выбрать этот сервис?</span
+                >
+                <span class="quick-item__a"
+                  >Работаем только с китайскими марками — знаем их особенности,
+                  а не «немного всё».</span
+                >
+              </span>
+              <span class="quick-item__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </a>
+            <a class="quick-item" href="#reviews">
+              <span class="quick-item__num">2</span>
+              <span>
+                <span class="quick-item__q">Можно ли доверять компании?</span>
+                <span class="quick-item__a"
+                  >Гарантия на работы, прозрачная диагностика и реальные отзывы
+                  в 2ГИС.</span
+                >
+              </span>
+              <span class="quick-item__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </a>
+            <a class="quick-item" href="#brands">
+              <span class="quick-item__num">3</span>
+              <span>
+                <span class="quick-item__q"
+                  >Работает ли сервис с моей маркой?</span
+                >
+                <span class="quick-item__a"
+                  >Chery, Geely, Haval, Changan, OMODA, EXEED, Jetour, TANK,
+                  GAC, JAC и другие.</span
+                >
+              </span>
+              <span class="quick-item__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </a>
+            <a class="quick-item" href="#benefits">
+              <span class="quick-item__num">4</span>
+              <span>
+                <span class="quick-item__q">Что именно я получу?</span>
+                <span class="quick-item__a"
+                  >Диагностику и ремонт, подбор и продажу запчастей, установку в
+                  своём автосервисе.</span
+                >
+              </span>
+              <span class="quick-item__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </a>
+            <a class="quick-item" href="#contacts" style="grid-column: 1 / -1">
+              <span class="quick-item__num">5</span>
+              <span>
+                <span class="quick-item__q"
+                  >Как быстро связаться или приехать?</span
+                >
+                <span class="quick-item__a"
+                  >Звонок, MAX, Telegram или маршрут — в один клик ниже. Адрес:
+                  Уфа, Самаркандская, 4/1.</span
+                >
+              </span>
+              <span class="quick-item__arrow" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ДОВЕРИЕ ===== -->
+      <section id="trust" aria-label="Почему нам доверяют">
+        <div class="wrap">
+          <span class="section__eyebrow">Почему выбирают нас</span>
+          <h2>Сервис, который знает китайские авто изнутри</h2>
+          <div class="trust-grid">
+            <div class="trust-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <div class="trust-card__title">Только китайские марки</div>
+              <div class="trust-card__desc">
+                Не распыляемся на все бренды — знаем узкие места именно ваших
+                моделей.
+              </div>
+            </div>
+            <div class="trust-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z" />
+              </svg>
+              <div class="trust-card__title">Гарантия на работы</div>
+              <div class="trust-card__desc">
+                Прозрачный чек-лист диагностики и письменная гарантия на
+                выполненный ремонт.
+              </div>
+            </div>
+            <div class="trust-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="7" width="18" height="13" rx="2" />
+                <path d="M8 7V5a4 4 0 0 1 8 0v2" />
+              </svg>
+              <div class="trust-card__title">Оригинал и аналоги</div>
+              <div class="trust-card__desc">
+                Подбираем запчасти под ваш бюджет — от оригинала до проверенных
+                аналогов.
+              </div>
+            </div>
+            <div class="trust-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path
+                  d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"
+                />
+              </svg>
+              <div class="trust-card__title">Свой автосервис</div>
+              <div class="trust-card__desc">
+                Устанавливаем всё, что подобрали и продали — без визитов "на
+                сторону".
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== МАРКИ ===== -->
+      <section
+        id="brands"
+        class="section--alt"
+        aria-label="Марки, с которыми мы работаем"
+      >
+        <div class="wrap">
+          <span class="section__eyebrow">Ваша марка — наш профиль</span>
+          <h2>Работаем со всеми популярными китайскими брендами</h2>
+          <div class="plates">
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>CHERY</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>GEELY</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>HAVAL</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>CHANGAN</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>OMODA</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>EXEED</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>JETOUR</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>TANK</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>GAC</span>
+            </div>
+            <div class="plate">
+              <div class="plate__stripe"></div>
+              <span>JAC</span>
+            </div>
+            <div class="plate plate--more">
+              <div class="plate__stripe"></div>
+              <span>+ другие марки</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ЧТО ВЫ ПОЛУЧАЕТЕ ===== -->
+      <section id="benefits" aria-label="Что вы получаете">
+        <div class="wrap">
+          <span class="section__eyebrow">Формат работы</span>
+          <h2>Что вы получаете</h2>
+          <div class="benefits-list">
+            <div class="benefit-card">
+              <div class="benefit-card__num">1</div>
+              <div>
+                <div class="benefit-card__title">Диагностика и ремонт</div>
+                <div class="benefit-card__desc">
+                  Компьютерная диагностика, поиск неисправности и ремонт
+                  двигателя, ходовой, электрики.
+                </div>
+              </div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-card__num">2</div>
+              <div>
+                <div class="benefit-card__title">
+                  Подбор и продажа запчастей
+                </div>
+                <div class="benefit-card__desc">
+                  Найдём нужную деталь по VIN — в наличии или под заказ, с
+                  сохранением бюджета.
+                </div>
+              </div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-card__num">3</div>
+              <div>
+                <div class="benefit-card__title">
+                  Установка в своём автосервисе
+                </div>
+                <div class="benefit-card__desc">
+                  Всё, что подобрали, сразу же и устанавливаем — не нужно ехать
+                  в другое место.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ФОТО СЕРВИСА ===== -->
+      <section class="section--alt" aria-label="Сервисный центр">
+        <div class="wrap">
+          <span class="section__eyebrow">Загляните внутрь</span>
+          <h2>Наш сервисный центр</h2>
+          <div class="gallery-grid">
+            <div class="gallery-item"><span>Зона диагностики</span></div>
+            <div class="gallery-item"><span>Склад запчастей</span></div>
+            <div class="gallery-item"><span>Пост ремонта</span></div>
+            <div class="gallery-item"><span>Зона ожидания</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ОТЗЫВЫ (карусель) ===== -->
+      <section id="reviews" aria-label="Отзывы клиентов">
+        <div class="wrap">
+          <span class="section__eyebrow">Нам доверяют</span>
+          <h2>Отзывы клиентов</h2>
+          <div class="rating-badge">
+            <span class="rating-badge__stars">★★★★★</span>
+            <span class="rating-badge__text"
+              ><strong>5,0</strong> · 152 оценки в 2ГИС</span
+            >
+          </div>
+
+          <div class="review-carousel">
+            <div
+              class="review-track"
+              id="review-track"
+              tabindex="0"
+              aria-label="Лента отзывов, листайте влево и вправо"
+            ></div>
+          </div>
+          <div class="review-carousel__nav">
+            <button
+              class="review-carousel__btn"
+              id="review-prev"
+              type="button"
+              aria-label="Предыдущий отзыв"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <span class="review-carousel__count" id="review-count"></span>
+            <button
+              class="review-carousel__btn"
+              id="review-next"
+              type="button"
+              aria-label="Следующий отзыв"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+
+          <p class="review__note">
+            Показаны реальные отзывы клиентов с 2ГИС в пересказе. Полный список
+            — по ссылке ниже.
+          </p>
+
+          <div class="review__cta">
+            <a
+              class="btn btn--primary"
+              id="reviews-2gis"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              >Все отзывы в 2ГИС</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== КОНТАКТЫ / ЦЕЛЕВЫЕ ДЕЙСТВИЯ ===== -->
+      <section class="section--alt" id="contacts" aria-label="Контакты">
+        <div class="wrap">
+          <span class="section__eyebrow">Связаться с нами</span>
+          <h2>Выберите удобный способ</h2>
+
+          <div class="action-grid">
+            <a class="action action--call" href="tel:+73472000794">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.4c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"
+                />
+              </svg>
+              <strong>Позвонить<br />+7 (347) 200-07-94</strong>
+            </a>
+
+            <!-- Ссылка найдена в официальной карточке 2ГИС компании -->
+            <a
+              class="action"
+              href="http://max.ru/id276962742_biz"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 11.5a8.4 8.4 0 0 1-1 4 8.5 8.5 0 0 1-7.5 4.5 8.4 8.4 0 0 1-4-1L3 20l1-5.5a8.4 8.4 0 0 1-1-4A8.5 8.5 0 0 1 11.5 2 8.5 8.5 0 0 1 21 11.5Z"
+                />
+              </svg>
+              <strong>Написать в MAX</strong>
+            </a>
+
+            <!-- Ссылка найдена в официальной карточке 2ГИС компании -->
+            <a
+              class="action"
+              href="https://t.me/+79273173179"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m22 2-7 20-4-9-9-4Z" />
+                <path d="M22 2 11 13" />
+              </svg>
+              <strong>Написать в Telegram</strong>
+            </a>
+
+            <a
+              class="action"
+              id="contacts-route"
+              href="#"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <strong>Построить маршрут</strong>
+            </a>
+
+            <button class="action" type="button" id="save-contact-btn">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <strong>Сохранить контакт</strong>
+            </button>
+
+            <a
+              class="action"
+              id="contacts-2gis"
+              href="#"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <strong>Отзывы в 2ГИС</strong>
+            </a>
+          </div>
+
+          <div class="form-card">
+            <h3>Оставить заявку</h3>
+            <p class="form-card__desc">
+              Оставьте номер — перезвоним и подберём время визита.
+            </p>
+            <form id="lead-form" novalidate>
+              <div class="field">
+                <label for="lf-name">Ваше имя</label>
+                <input
+                  id="lf-name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="lf-phone">Телефон</label>
+                <input
+                  id="lf-phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  placeholder="+7 (___) ___-__-__"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="lf-car">Марка и модель авто</label>
+                <input
+                  id="lf-car"
+                  name="car"
+                  type="text"
+                  placeholder="Например, Chery Tiggo 7 Pro"
+                />
+              </div>
+              <div class="field">
+                <label for="lf-comment"
+                  >Что нужно сделать (необязательно)</label
+                >
+                <textarea id="lf-comment" name="comment" rows="3"></textarea>
+              </div>
+              <button
+                class="btn btn--primary btn--block"
+                type="submit"
+                id="lf-submit"
+              >
+                Отправить заявку
+              </button>
+              <div class="form-status" id="lf-status" role="status"></div>
+            </form>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card__row">
+              <span class="info-card__label">Адрес</span>
+              <span class="info-card__value">г. Уфа, Самаркандская, 4/1</span>
+            </div>
+            <div class="info-card__row">
+              <span class="info-card__label">Телефон</span>
+              <span class="info-card__value">+7 (347) 200-07-94</span>
+            </div>
+            <div class="info-card__row">
+              <span class="info-card__label">Режим работы</span>
+              <!-- TODO: уточнить фактический график работы -->
+              <span class="info-card__value">Пн–Сб, 9:00–19:00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <img
+          src="image.png"
+          alt="Логотип КитайЗапчасть"
+          style="
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+          "
+        />
+        <div class="foot-brand">КитайЗапчасть</div>
+        <p>
+          Автосервис и запчасти для китайских автомобилей · г. Уфа,
+          Самаркандская, 4/1 · +7 (347) 200-07-94
+        </p>
+        <p>
+          Страница создана для посетителей по QR-коду с рекламных визиток.
+          Полная версия сайта —
+          <a href="https://kitaizapchast.ru">kitaizapchast.ru</a>
+        </p>
+        <p>© <span id="year"></span> КитайЗапчасть</p>
+      </div>
+    </footer>
+
+    <!-- ===== STICKY CTA (мобильная панель для управления одной рукой) ===== -->
+    <nav class="sticky-cta" aria-label="Быстрые действия">
+      <a class="call" href="tel:+73472000794">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.4c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"
+          />
+        </svg>
+        Звонок
+      </a>
+      <!-- Ссылка найдена в официальной карточке 2ГИС компании -->
+      <a href="http://max.ru/id276962742_biz" target="_blank" rel="noopener">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M21 11.5a8.4 8.4 0 0 1-1 4 8.5 8.5 0 0 1-7.5 4.5 8.4 8.4 0 0 1-4-1L3 20l1-5.5a8.4 8.4 0 0 1-1-4A8.5 8.5 0 0 1 11.5 2 8.5 8.5 0 0 1 21 11.5Z"
+          />
+        </svg>
+        MAX
+      </a>
+      <!-- Ссылка найдена в официальной карточке 2ГИС компании -->
+      <a href="https://t.me/+79273173179" target="_blank" rel="noopener">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="m22 2-7 20-4-9-9-4Z" />
+          <path d="M22 2 11 13" />
+        </svg>
+        Telegram
+      </a>
+      <a id="sticky-route" href="#" target="_blank" rel="noopener">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        Маршрут
+      </a>
+    </nav>
+
+    <script>
+      (function () {
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // ---- Маршрут (2ГИС) — все ссылки-маршруты ведут на один и тот же адрес ----
+        var routeUrl =
+          "https://2gis.ru/ufa/directions/points/%7C56.060937%2C54.784567%3B2393065583151794";
+        ["hero-route", "contacts-route", "sticky-route"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.href = routeUrl;
+        });
+
+        // ---- Ссылка на отзывы в 2ГИС ----
+        var reviewsUrl =
+          "https://2gis.ru/ufa/firm/2393065583151794/tab/reviews";
+        ["reviews-2gis", "contacts-2gis"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.href = reviewsUrl;
+        });
+
+        // ---- Сохранить контакт (vCard) ----
+        document
+          .getElementById("save-contact-btn")
+          .addEventListener("click", function () {
+            var vcard = [
+              "BEGIN:VCARD",
+              "VERSION:3.0",
+              "N:;КитайЗапчасть;;;",
+              "FN:КитайЗапчасть",
+              "ORG:КитайЗапчасть — автосервис и запчасти для китайских авто",
+              "TEL;TYPE=WORK,VOICE:+73472000794",
+              "ADR;TYPE=WORK:;;Самаркандская, 4/1;Уфа;;;Россия",
+              "URL:https://kitaizapchast.ru",
+              "END:VCARD",
+            ].join("\r\n");
+            var blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "kitaizapchast.vcf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+
+        // ---- Форма заявки: отправка напрямую в Telegram-бот ----
+        var TG_BOT_TOKEN = "8824131451:AAHKiddVk0TBbCFqQuPRBb_26TV0_aHl2DU";
+        var TG_CHAT_ID = "8744575625";
+
+        function escapeHtml(str) {
+          return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        }
+
+        function formatNowUfa() {
+          var now = new Date();
+          var datePart = now.toLocaleDateString("ru-RU", {
+            timeZone: "Asia/Yekaterinburg",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          var timePart = now.toLocaleTimeString("ru-RU", {
+            timeZone: "Asia/Yekaterinburg",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          return {
+            date: datePart,
+            time: timePart,
+            full: datePart + ", " + timePart,
+          };
+        }
+
+        var form = document.getElementById("lead-form");
+        var status = document.getElementById("lf-status");
+        var submitBtn = document.getElementById("lf-submit");
+
+        var ICON_OK =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>';
+        var ICON_ERR =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>';
+        var ICON_PENDING =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="42" stroke-dashoffset="14"/></svg>';
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var name = form.name.value.trim();
+          var phone = form.phone.value.trim();
+
+          if (!name || !phone) {
+            status.className = "form-status err";
+            status.innerHTML =
+              ICON_ERR + "<span>Заполните имя и телефон.</span>";
+            return;
+          }
+
+          var car = form.car.value.trim();
+          var comment = form.comment.value.trim();
+          var when = formatNowUfa();
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Отправляем…";
+          status.className = "form-status pending";
+          status.innerHTML = ICON_PENDING + "<span>Отправляем заявку…</span>";
+
+          var text =
+            "🚗 <b>Новая заявка — КитайЗапчасть</b>\n" +
+            "━━━━━━━━━━━━━━━━━\n" +
+            "👤 <b>Имя:</b> " +
+            escapeHtml(name) +
+            "\n" +
+            "📞 <b>Телефон:</b> " +
+            escapeHtml(phone) +
+            "\n" +
+            (car ? "🚙 <b>Авто:</b> " + escapeHtml(car) + "\n" : "") +
+            (comment
+              ? "💬 <b>Комментарий:</b> " + escapeHtml(comment) + "\n"
+              : "") +
+            "━━━━━━━━━━━━━━━━━\n" +
+            "🕒 <b>Дата и время:</b> " +
+            when.full +
+            " (Уфа)\n" +
+            "📍 <b>Источник:</b> QR-визитка (сайт)";
+
+          fetch(
+            "https://api.telegram.org/bot" + TG_BOT_TOKEN + "/sendMessage",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: TG_CHAT_ID,
+                text: text,
+                parse_mode: "HTML",
+              }),
+            },
+          )
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (data) {
+              if (!data.ok) throw new Error("telegram error");
+              status.className = "form-status ok";
+              status.innerHTML =
+                ICON_OK +
+                "<span>Заявка отправлена! Мы скоро свяжемся с вами." +
+                '<span class="form-status__time">Отправлено ' +
+                when.full +
+                "</span></span>";
+              form.reset();
+            })
+            .catch(function () {
+              status.className = "form-status err";
+              status.innerHTML =
+                ICON_ERR +
+                "<span>Не удалось отправить заявку. Позвоните нам напрямую: " +
+                '<a href="tel:+73472000794" style="text-decoration:underline;">+7 (347) 200-07-94</a></span>';
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Отправить заявку";
+            });
+        });
+
+        // ---- Карусель отзывов ----
+        // Пересказ реальных отзывов клиентов с карточки компании в 2ГИС
+        // (https://2gis.ru/ufa/firm/2393065583151794/tab/reviews).
+        // 2ГИС подгружает остальные отзывы по клику "Загрузить ещё" через свой
+        // внутренний API — без доступа к нему из статической страницы получить
+        // все 124 отзыва невозможно, здесь собраны те, что отдаются при первой
+        // загрузке страницы отзывов.
+        var REVIEWS = [
+          {
+            name: "Елена Хайдарова",
+            meta: "1 отзыв",
+            text: "Автосервис дешевле официального дилера, всё быстро сделали и подробно объяснили. Отдельно порадовала зона отдыха: бесплатный кофе и кресло-массажёр.",
+          },
+          {
+            name: "Артём Долинин",
+            meta: "9 отзывов",
+            text: "Хорошие мастера, все запчасти для ТО есть в наличии. Заказывал детали не раз — всегда приходят быстро.",
+          },
+          {
+            name: "Ирина",
+            meta: "15 отзывов",
+            text: "Супер сервис! Ребята, вы крутые!",
+          },
+          {
+            name: "Irik Khalikov",
+            meta: "12 отзывов",
+            text: "Хорошо разбираются в китайских авто, работают профессионально. Сервис топовый, запчасти качественные.",
+          },
+          {
+            name: "Городской житель",
+            meta: "1 отзыв",
+            text: "Диагностику автомобиля провели на высшем уровне, угостили бесплатным кофе. Цены приятно удивили.",
+          },
+          {
+            name: "Тимур Довиденко",
+            meta: "10 отзывов",
+            text: "Купил ДТОЖ на Lifan, деталь оказалась нерабочей — на следующий день бесплатно заменили без лишних вопросов. Цены хорошие, без переплат.",
+          },
+          {
+            name: "Руслан Халимов",
+            meta: "1 отзыв",
+            text: "Быстро и качественно нашли проблему и устранили. Плюс — свой магазин запчастей при сервисе, не нужно искать детали на стороне, есть удобная комната ожидания.",
+          },
+          {
+            name: "Венера Вахитова",
+            meta: "4 отзыва",
+            text: "Вежливо консультируют по телефону и на месте, подскажут, что лучше. Ездит издалека, но говорит, что того стоит.",
+          },
+          {
+            name: "Данил Валеев",
+            meta: "3 отзыва",
+            text: "Меняли масло в коробке, все расходники были в наличии. Сделали качественно.",
+          },
+          {
+            name: "Галлям Валиев",
+            meta: "4 отзыва",
+            text: "Отличный сервис и магазин, адекватные цены. Планирует обслуживаться только здесь и советует другим.",
+          },
+          {
+            name: "лейсан нугаева",
+            meta: "2 отзыва",
+            text: "Хороший выбор, отличные специалисты — всё подробно объясняют и хорошо делают свою работу.",
+          },
+          {
+            name: "Ринат Шаймуратов",
+            meta: "2 отзыва",
+            text: "Хороший сервис, ТО провели быстро и грамотно.",
+          },
+          {
+            name: "Рамиль Гайсин",
+            meta: "15 отзывов",
+            text: "Обслуживает Haval Jolion: сервис отличный, цены недорогие, механики умелые. Магазин запчастей богатый, а если детали нет — быстро привозят.",
+          },
+          {
+            name: "Элина Ррр",
+            meta: "4 отзыва",
+            text: "Обращается не первый раз именно из-за специализации на китайских авто. Большинство деталей в наличии, а в комнате ожидания уютно: можно наблюдать за ремонтом по камерам, смотреть ТВ и пить кофе.",
+          },
+          {
+            name: "Городской житель",
+            meta: "2 отзыва",
+            text: "Сервис и магазин всегда оставляют хорошее впечатление. Если запчасть не подошла — без проблем меняют по гарантии, без лишних вопросов.",
+          },
+          {
+            name: "Рустем Габидуллин",
+            meta: "1 отзыв",
+            text: "Сработали чётко, детали были в наличии — отремонтировали ходовую.",
+          },
+          {
+            name: "Вадим Яндимиров",
+            meta: "2 отзыва",
+            text: "Делал диагностику ходовой на Chery Tiggo 3 — всё проверили качественно, нареканий нет.",
+          },
+          {
+            name: "Леонид Петров",
+            meta: "4 отзыва",
+            text: "Обращается не в первый раз, отдельная благодарность мастеру Александру — работу выполнил на отлично.",
+          },
+          {
+            name: "Сергей Степанов",
+            meta: "2 отзыва",
+            text: "Реальные ребята, бывал здесь не раз — всё отлично. Комната ожидания с массажным креслом, бесплатным кофе, конфетами и двумя телевизорами.",
+          },
+          {
+            name: "Берегите Планету",
+            meta: "12 отзывов",
+            text: "Заменили масло, все расходники были в наличии — сделали быстро и качественно.",
+          },
+          {
+            name: "Альберт Гайнутдинов",
+            meta: "5 отзывов",
+            text: "На Haval F7 заменили масло и фильтр, запчасти были в наличии.",
+          },
+          {
+            name: "Анастасия Кашапова",
+            meta: "6 отзывов",
+            text: "Запчасти были в наличии, сразу установили — взяли в работу даже раньше записи.",
+          },
+          {
+            name: "Александр Данилов",
+            meta: "4 отзыва",
+            text: "Обслуживает автомобиль здесь давно: мастера своего дела, всё подскажут и найдут поломку.",
+          },
+          {
+            name: "Городской житель",
+            meta: "1 отзыв",
+            text: "Заменили масло в АКПП, нашли и устранили проблему в тормозной системе — все запчасти были в наличии.",
+          },
+          {
+            name: "Городской житель",
+            meta: "4 отзыва",
+            text: "Хороший магазин с большим выбором запчастей и приятными ценами. Отдельная благодарность сотруднику Тимуру — помог подобрать нужную деталь и всё подробно объяснил.",
+          },
+          {
+            name: "Лилия Губайдуллина",
+            meta: "1 отзыв",
+            text: "Меняла шаровую опору — запчасти оказались вдвое дешевле, чем у дилера. Обслуживание на высоте, персонал вежливый.",
+          },
+          {
+            name: "Эльмира Сама",
+            meta: "1 отзыв",
+            text: "Обращается не первый раз именно из-за специализации сервиса на китайских авто. Всё делают быстро, качественно и с гарантией.",
+          },
+          {
+            name: "Юлия Уметбаева",
+            meta: "2 отзыва",
+            text: "Всегда приезжает сюда за запчастями и на замену — всё делают качественно и быстро.",
+          },
+          {
+            name: "Ильдар Гимаев",
+            meta: "2 отзыва",
+            text: "Всё сделали хорошо и качественно, будет рекомендовать всем.",
+          },
+          {
+            name: "Марат Бородат",
+            meta: "54 отзыва",
+            text: "Большой выбор в магазине, приятные продавцы. Купленные детали можно сразу установить в сервисе при магазине, есть удобная бонусная программа.",
+          },
+          {
+            name: "Вячеслав Ильин",
+            meta: "29 отзывов",
+            text: "В магазине почти всегда есть нужное, а если чего-то нет — привозят точно в срок. Твёрдая пятёрка.",
+          },
+          {
+            name: "Динара Т",
+            meta: "4 отзыва",
+            text: "Хороший сервис, отзывчивый персонал.",
+          },
+          {
+            name: "Александр Локтев",
+            meta: "1 отзыв",
+            text: "Быстро и качественно, отличный сервис.",
+          },
+          {
+            name: "Радмир Хисматуллин",
+            meta: "2 отзыва",
+            text: "Отличный магазин: цены хорошие, качество на уровне.",
+          },
+          {
+            name: "Юлия Киселева",
+            meta: "1 отзыв",
+            text: "Приезжала на диагностику — всё быстро проверили. Сотрудники вежливые, комната ожидания удобная и комфортная.",
+          },
+          {
+            name: "Раиль Шакиров",
+            meta: "1 отзыв",
+            text: "Заменили масло в двигателе и коробке, расходники были в наличии. Цены адекватные.",
+          },
+          {
+            name: "Вадим Хусаенов",
+            meta: "1 отзыв",
+            text: "Широкий ассортимент, адекватные цены. Отдельная благодарность продавцу Максиму — подробно проконсультировал и помог выбрать товар.",
+          },
+          {
+            name: "Вадим Гилязов",
+            meta: "3 отзыва",
+            text: "Приезжает не в первый раз — всё делают на совесть, качество на уровне.",
+          },
+          {
+            name: "Аноним",
+            meta: "4 отзыва",
+            text: "Отличные ребята, хороший сервис, бесплатный кофе.",
+          },
+          {
+            name: "Артур Мугаллимов",
+            meta: "1 отзыв",
+            text: "Оперативно определили источник постороннего звука и согласовали дальнейшую работу.",
+          },
+          {
+            name: "Николай Якупов",
+            meta: "3 отзыва",
+            text: "Отличный сервис, адекватные цены. Решили вопрос с ходовой на Tiggo Pro.",
+          },
+          {
+            name: "Оксана Яловец",
+            meta: "41 отзыв",
+            text: "Все запчасти в наличии, продавцы работают оперативно. Была спорная ситуация, но всё уладили без скандала.",
+          },
+          {
+            name: "Андрей Вычужанов",
+            meta: "2 отзыва",
+            text: "Подобрали дворники на Haval Jolion с учётом родных креплений — результат супер.",
+          },
+          {
+            name: "Раиль Фахритдинов",
+            meta: "1 отзыв",
+            text: "Отличный магазин и автосервис — приехал, быстро всё сделали и с улыбкой отправили домой.",
+          },
+          {
+            name: "Андрей Андрей",
+            meta: "3 отзыва",
+            text: "Сотрудники оперативно и быстро решили вопрос с ходовой.",
+          },
+          {
+            name: "Айдар Сагадатов",
+            meta: "3 отзыва",
+            text: "Обращается не первый раз, цены приемлемые — всё отлично, рекомендует.",
+          },
+          {
+            name: "Снежана Моор",
+            meta: "1 отзыв",
+            text: "Обращается не в первый раз: делают всё качественно и быстро, подробно объясняют причины неисправности и стоимость ремонта.",
+          },
+          {
+            name: "Любовь Асянова",
+            meta: "1 отзыв",
+            text: "Благодарность всем сотрудникам магазина и сервиса — золотые руки и высокий уровень обслуживания.",
+          },
+        ];
+
+        var track = document.getElementById("review-track");
+        var countEl = document.getElementById("review-count");
+
+        REVIEWS.forEach(function (r) {
+          var card = document.createElement("article");
+          card.className = "review-card";
+          card.innerHTML =
+            "<div>" +
+            '<div class="review-card__stars">★★★★★</div>' +
+            '<div class="review-card__text"></div>' +
+            "</div>" +
+            '<div class="review-card__author"></div>';
+          card.querySelector(".review-card__text").textContent = r.text;
+          card.querySelector(".review-card__author").textContent =
+            "— " + r.name + " · " + r.meta + " · 2ГИС";
+          track.appendChild(card);
+        });
+
+        countEl.textContent = "1 / " + REVIEWS.length;
+
+        function currentIndex() {
+          var cardWidth =
+            track.firstElementChild.getBoundingClientRect().width + 12;
+          return Math.round(track.scrollLeft / cardWidth);
+        }
+        function scrollToIndex(i) {
+          var cardWidth =
+            track.firstElementChild.getBoundingClientRect().width + 12;
+          var max = REVIEWS.length - 1;
+          i = Math.max(0, Math.min(max, i));
+          track.scrollTo({ left: i * cardWidth, behavior: "smooth" });
+        }
+        document
+          .getElementById("review-prev")
+          .addEventListener("click", function () {
+            scrollToIndex(currentIndex() - 1);
+          });
+        document
+          .getElementById("review-next")
+          .addEventListener("click", function () {
+            scrollToIndex(currentIndex() + 1);
+          });
+        track.addEventListener("scroll", function () {
+          clearTimeout(track._t);
+          track._t = setTimeout(function () {
+            countEl.textContent = currentIndex() + 1 + " / " + REVIEWS.length;
+          }, 80);
+        });
+      })();
+    </script>
+  </body>
+</html>
