@@ -509,14 +509,37 @@
         grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
-      .gallery-item {
+      .gallery-item-1 {
         aspect-ratio: 1/1;
         border-radius: 10px;
-        background: repeating-linear-gradient(
-          135deg,
-          #e3e5e9 0 10px,
-          #ecedf0 10px 20px
-        );
+        backround: url()
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: flex-end;
+        padding: 8px;
+      }
+      .gallery-item-2 {
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        backround: url(sklad.jpeg)
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: flex-end;
+        padding: 8px;
+      }
+      .gallery-item-3 {
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        backround: url(post-repear.jpeg)
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: flex-end;
+        padding: 8px;
+      }
+      .gallery-item-3 {
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        backround: url(wait-zone.jpeg)
         border: 1px solid var(--line);
         display: flex;
         align-items: flex-end;
@@ -1282,10 +1305,10 @@
           <span class="section__eyebrow">Загляните внутрь</span>
           <h2>Наш сервисный центр</h2>
           <div class="gallery-grid">
-            <div class="gallery-item"><span>Зона диагностики</span></div>
-            <div class="gallery-item"><span>Склад запчастей</span></div>
-            <div class="gallery-item"><span>Пост ремонта</span></div>
-            <div class="gallery-item"><span>Зона ожидания</span></div>
+            <div class="gallery-item-1"><span>Зона диагностики</span></div>
+            <div class="gallery-item-2"><span>Склад запчастей</span></div>
+            <div class="gallery-item-3"><span>Пост ремонта</span></div>
+            <div class="gallery-item-4"><span>Зона ожидания</span></div>
           </div>
         </div>
       </section>
