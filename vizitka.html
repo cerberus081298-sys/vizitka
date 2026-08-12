@@ -278,6 +278,7 @@
       .hero__strip {
         margin-top: 20px;
         display: flex;
+        justify-content: space-around;
         align-items: center;
         gap: 10px;
         font-family: var(--font-mono);
@@ -431,12 +432,13 @@
 
       /* ===== BRAND PLATES (signature detail) ===== */
       .plates {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
       }
       .plate {
         display: flex;
+        width: 100%;
         align-items: stretch;
         background: #fff;
         border: 1.5px solid var(--onyx);
@@ -455,6 +457,8 @@
       }
       .plate span {
         padding: 7px 10px;
+        flex: 1;
+        text-align: center;
       }
       .plate--more {
         color: var(--muted);
@@ -980,11 +984,11 @@
           <div class="brand__text">
             <span class="brand__name">Китай<span>Запчасть</span></span>
             <span class="brand__tag"
-              >Автосервис и запчасти для китайских авто</span
+              >Автосервис и запчасти для <br> китайских авто</span
             >
           </div>
         </div>
-        <a class="brand__phone" href="tel:+73472000794">+7 (347) 200 07-94</a>
+        <a class="brand__phone" href="tel:+73472000794">+7(347) 200 07-94</a>
       </div>
       <div class="ticket-header__perf" aria-hidden="true"></div>
     </header>
@@ -1038,10 +1042,8 @@
           </div>
 
           <div class="hero__strip">
-            <span>CHERY</span
-            >·<span>GEELY</span>·<span>HAVAL</span>·<span>CHANGAN</span>·<span>OMODA</span>·<span>EXEED</span>·<span
-              >ещё 5+</span
-            >
+            ·<span>CHERY</span
+            >·<span>GEELY</span>·<span>HAVAL</span>·
           </div>
         </div>
       </section>
@@ -1257,6 +1259,7 @@
             <div class="plate">
               <div class="plate__stripe"></div>
               <span>HAVAL</span>
+            </div>
             </div>
           </div>
         </div>
